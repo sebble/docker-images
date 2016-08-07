@@ -1,0 +1,1 @@
+41 6,15 * * * /usr/bin/certbot renew --no-self-upgrade
