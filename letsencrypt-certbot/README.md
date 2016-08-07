@@ -1,16 +1,14 @@
 ## Usage
 
-**Do not use as-is, needs persistent volume or missing compose file**
-
 ### Set up a Certbot container
 
-See example compose file at https://github.com/sebble/docker-images/
+See example compose file at https://github.com/sebble/docker-images/blob/master/letsencrypt-certbot/docker-compose.yml.
 
-    docker-compose up -d
+    docker-compose up -d; docker-compose logs
 
 ### Register new domain
 
-    docker run --rm -it sebble/letsencrypt-certbot-alpine \
+    docker exec -it example_certbot_1 \
         certbot \
         certonly \
         --standalone \
@@ -22,7 +20,7 @@ See example compose file at https://github.com/sebble/docker-images/
 
 Explanation:
 
-    docker exec -it nginx_certbot_1              # run a disposable container
+    docker exec -it example_certbot_1            # enter composed container
 
         certbot                                  # run `certbot`
 

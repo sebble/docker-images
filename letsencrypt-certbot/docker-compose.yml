@@ -1,0 +1,8 @@
+version: '2'
+services:
+    
+    certbot:
+        image: sebble/letsencrypt-certbot-alpine
+        ports:
+            - "8080:80"
+
