@@ -19,7 +19,7 @@ Docker image based on Alpine linux with a few extra packages suitable for remote
 **.gitlab-ci.yml**:
 
 ```
-image: sjimellor/deploy
+image: sebble/deploy
 
 before_script:
     - ## http://docs.gitlab.com/ce/ci/ssh_keys/README.html
@@ -57,7 +57,7 @@ rsync -av -e ssh "$LOCAL_DIR" "$REMOTE_USER@$REMOTE_HOST:$REMOTE_DIR"
 **.gitlab-ci.yml**:
 
 ```
-image: sjimellor/deploy
+image: sebble/deploy
 
 deploy:
     stage: deploy
