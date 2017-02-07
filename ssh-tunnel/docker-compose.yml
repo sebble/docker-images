@@ -1,0 +1,46 @@
+version: '2'
+services:
+
+    # Your existing service
+    my_service:
+        image: alpine
+        cmd: sleep 9d
+        restart: always
+
+    # The SSH reverse NAT-punching tunnel
+    tunnel:
+        image: sebble/ssh-tunnel
+        restart: always
+
+        # ./config should contain id_rsa, id_rsa.pub, known_hosts
+        volumes:
+            - ./config:/root/.ssh
+
+        # configure remote host and optional additional tunnels
+        environment:
+            - REMOTE_HOST=external.example.com
+            - REMOTE_USER=tunnel-user
+            - REMOTE_TUNNEL=0.0.0.0:12345:my_service:80
+            - SSH_OPTIONS=-R 0.0.0.0:12346:my_service:22
+
+        # to proxy my_service the tunnel must link to it
+        links:
+            - my_service
+
+     # An example proxying this hosts SSH connection
+     host_ssh:
+         image: sebble/ssh-tunnel
+         restart: always
+         volumes:
+            - ./config:/root/.ssh
+        environment:
+            - REMOTE_HOST=external.example.com
+            - REMOTE_USER=tunnel-user
+            - REMOTE_TUNNEL=0.0.0.0:12347:localhost:22
+
+        # to proxy this hosts SSH we must use the host network
+        network_mode: host
+        networks:
+            default:
+                external:
+                    name: host

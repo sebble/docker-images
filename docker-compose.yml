@@ -1,0 +1,14 @@
+version: '2'
+services:
+
+    nginx-extras:
+        build: nginx-extras
+        image: sebble/nginx-extras
+
+    ssh-tunnel:
+        build: ssh-tunnel
+        image: sebble/ssh-tunnel
+
+    syncthing-mirror:
+        build: syncthing-mirror
+        image: sebble/syncthing-mirror

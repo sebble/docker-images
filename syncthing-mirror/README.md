@@ -1,0 +1,45 @@
+# Syncthing Mirror
+
+This image contains Syncthing for Debian Jessie.
+
+Additionally, the default configuration enables easy one-way syncing of the contents of `/root/Sync` to a remote Syncthing device given by `REMOTE_DEVICE_ID`.
+## Example `docker-compose.yml` file usage
+
+```
+version: '2'
+services:
+
+    # Your existing service containers
+    my_service:
+        image: nginx:alpine
+        restart: always
+        volumes:
+            - my_service_config:/etc/nginx
+            - my_service_data:/var/www/html
+
+    # The Syncthing container
+    syncthing:
+        image: sebble/syncthing-mirror
+        restart: always
+
+        # Map your existing volumes into Syncthing
+        volumes:
+            - my_service_config:/root/Sync/my_service_config
+            - my_service_data:/root/Sync/my_service_data
+
+        # By default "/root/Sync" will be shared read-only with this device
+        environment:
+            - REMOTE_DEVICE_ID=1234567-ABCDEFG-1234567-ABCDEFG-1234567-ABCDEFG-1234567-ABCDEFG
+
+        # Syncthing uses the hostname to identify this device
+        hostname: my_service-syncthing
+
+        # Optionally, expose the Syncthing web interface for custom configuration
+        #ports:
+        #    - "8080:80"
+
+# Your existing container volumes
+volumes:
+    my_service_config: {}
+    my_service_data: {}
+```
