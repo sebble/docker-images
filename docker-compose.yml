@@ -12,3 +12,7 @@ services:
     syncthing-mirror:
         build: syncthing-mirror
         image: sebble/syncthing-mirror
+
+    dokku:
+        build: dokku
+        image: sebble/dokku

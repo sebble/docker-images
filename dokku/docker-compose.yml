@@ -1,0 +1,44 @@
+version: '2'
+services:
+
+    dokku:
+        image: sebble/dokku
+        volumes:
+
+          # Dokku requires access to the Docker daemon
+          - /var/run/docker.sock:/var/run/docker.sock
+
+          # You may map the Dokku data directory anywhere you wish
+          - ./data:/home/dokku
+
+        environment:
+
+          # Sets a password for SSH root access to the 'dokku' user
+          - USER_PASSWORD=password
+
+          # Disable the Nginx service in this container
+          #- DISABLE_NGINX=true
+
+          # Change the port Dokku's SSH will listen on
+          - SSH_PORT=12322
+
+          # Follow the /var/log/auth.log file
+          - TAIL_AUTH_LOG=true
+
+          # Change the port Dokku's first-run installer is on
+          - INSTALLER_PORT=12381
+
+          # Don't run the web based first-run installer
+          - SKIP_INSTALLER=true
+
+          # As http://dokku.viewdocs.io/dokku/configuration/nginx/
+          - DOKKU_NGINX_PORT=12380
+          - DOKKU_NGINX_SSL_PORT=12343
+          #- DOKKU_*=any other DOKKU_GLOBAL_VARIABLE
+
+          # Required for Nginx reload: replaces invoke-rc
+          - PATCH_UPSTART=true
+
+        # Dokku needs access to the containers it creates
+        network_mode: host
+
