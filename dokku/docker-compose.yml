@@ -14,7 +14,7 @@ services:
         environment:
 
           # Sets a password for SSH root access to the 'dokku' user
-          - USER_PASSWORD=password
+          #- USER_PASSWORD=password
 
           # Disable the Nginx service in this container
           #- DISABLE_NGINX=true
