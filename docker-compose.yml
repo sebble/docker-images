@@ -16,3 +16,8 @@ services:
     dokku:
         build: dokku
         image: sebble/dokku
+
+    hosts:
+        build: hosts
+        image: sebble/hosts
+

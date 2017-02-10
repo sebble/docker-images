@@ -7,8 +7,11 @@ test -n "$SSH_PORT" && sed -i "s/^Port 22/Port $SSH_PORT/" /etc/ssh/sshd_config
 ## Configure Dokku Installer
 test -n "INSTALLER_PORT" && sed -ri "s/listen\s+80/listen $INSTALLER_PORT/" /etc/nginx/conf.d/dokku-installer.conf
 
-## Check if dokku data dir has been re-mapped
-test -z "$(ls -A /home/dokku)" && rsync -av /home/dokku.src/ /home/dokku/
+## Check if Dokku dirs have been re-mapped
+test -z "$(ls -A /home/dokku)">/dev/null && rsync -av /dokku-src/home/ /home/dokku/
+test -z "$(ls -A /var/lib/dokku)">/dev/null && rsync -av /dokku-src/dokku/ /var/lib/dokku/
+test -z "$(ls -A /var/lib/dokku/data)">/dev/null && rsync -av /dokku-src/dokku/data/ /var/lib/dokku/data/
+test -z "$(ls -A /var/lib/dokku/plugins)">/dev/null && rsync -av /dokku-src/dokku/plugins/ /var/lib/dokku/plugins/
 
 ## Configure HOSTNAME
 hostname > /home/dokku/HOSTNAME

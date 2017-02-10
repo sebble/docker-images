@@ -8,8 +8,12 @@ services:
           # Dokku requires access to the Docker daemon
           - /var/run/docker.sock:/var/run/docker.sock
 
-          # You may map the Dokku data directory anywhere you wish
-          - ./data:/home/dokku
+          # You may map the Dokku home directory anywhere you wish
+          - ./data/home:/home/dokku
+
+          # You may also map the Dokku data directories anywhere you wish
+          - ./data/dokku:/var/lib/dokku
+
 
         environment:
 

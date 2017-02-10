@@ -13,9 +13,12 @@ RUN apt-get update \
  \
  && rm -rf /var/lib/apt/lists/* \
  \
- && mkdir /home/dokku.src && chown dokku:dokku /home/dokku.src && rsync -av /home/dokku/ /home/dokku.src/
+ && mkdir -p /dokku-src/{home,data,plugins} && chown -R dokku:dokku /dokku-src \
+ && rsync -av /home/dokku/ /dokku-src/home/ \
+ && rsync -av /var/lib/dokku/ /dokku-src/dokku/
 
 VOLUME /home/dokku
+VOLUME /var/lib/dokku
 VOLUME /etc/ssh
 
 COPY entrypoint.sh /entrypoint.sh
